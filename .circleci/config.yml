@@ -8,7 +8,7 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "From development branch" 
+      - run: echo "From development branchXXX" 
 
   build2:
     #branches:
@@ -18,4 +18,4 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "From master branch" 
+      - run: echo "From master branchYYYY" 
