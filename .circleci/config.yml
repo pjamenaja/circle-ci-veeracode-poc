@@ -19,3 +19,10 @@ jobs:
     steps:
       - checkout
       - run: echo "From master branch" 
+
+workflows:
+  version: 2.0
+  build_and_test:
+    jobs:
+      - build_development
+      - build_master
