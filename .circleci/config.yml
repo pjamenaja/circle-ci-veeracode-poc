@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run: echo "From development branch" 
 
-  build:
+  build2:
     branches:
       only:
         - master
