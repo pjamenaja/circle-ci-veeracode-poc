@@ -1,6 +1,6 @@
 version: 2.0
 jobs:
-  build:
+  build_development:
     branches:
       only:
         - development
@@ -8,4 +8,14 @@ jobs:
       - image: circleci/ruby:2.4.1
     steps:
       - checkout
-      - run: echo "A first hello" 
+      - run: echo "From development branch" 
+
+  build_master:
+    branches:
+      only:
+        - master
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - run: echo "From master branch" 
