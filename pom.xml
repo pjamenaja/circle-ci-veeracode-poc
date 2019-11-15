@@ -4,7 +4,7 @@
   <groupId>com.tdg.core.utils</groupId>
   <artifactId>java-demo-lib</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <name>java-demo-lib</name>
   <url>http://maven.apache.org</url>
 
