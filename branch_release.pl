@@ -17,7 +17,7 @@ my $TEMP_DIR = $ENV{'TEMP'}; #Temp directory
 my $SOURCE_BRANCH = 'development';
 
 my $REPO_NAME = 'circle-ci-veeracode-poc';
-my $POM_FILE = "$TEMP_DIR/$REPO_NAME/pom.xml";
+my $POM_FILE = "$TEMP_DIR/$REPO_NAME/.circleci/config.yml";
 my $SOURCE_REPO = 'https://github.com/pjamenaja/' . "$REPO_NAME.git";
 my $TARGET_BRANCH = 'master';
 my $RELEASE_PREFIX = 'release';
