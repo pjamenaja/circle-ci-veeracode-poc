@@ -4,13 +4,14 @@
   <groupId>com.tdg.core.utils</groupId>
   <artifactId>java-demo-lib</artifactId>
   <packaging>jar</packaging>
-  <version>${PACKAGE_VERSION}</version>
+  <version>${revision}</version>
   <name>java-demo-lib</name>
   <url>http://maven.apache.org</url>
 
   <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
+    <revision>1.0.0-SNAPSHOT</revision>
 </properties>
   
   <dependencies>
