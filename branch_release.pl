@@ -154,8 +154,9 @@ sub parse_pom
         my $line = $_;
         my $new_line = $line;
 
-        #<version>1.0-SNAPSHOT</version>
-        if (($line =~ /^\s*<version>(.+)<\/version>\s*$/) && (!$found_version))
+        #default: "1.0.1-SNAPSHOT"
+
+        if (($line =~ /^\s*default:\s*\"(.+\-SNAPSHOT)\"\s*$/) && (!$found_version))
         { 
             #Replace only first occurence            
 
@@ -287,7 +288,7 @@ my @COMMANDS =
         "cd $REPO_NAME; mv $POM_FILE.original $POM_FILE", #We don't care version from 'master' branch
 
         "parse_pom($POM_FILE,$RELEASE_VERSION)",
-        "cd $REPO_NAME; git add *; git commit --m 'Auto merge script $RELEASE_VERSION cut from $SOURCE_BRANCH'",        
+        "cd $REPO_NAME; git add .circleci/config.yml *; git commit --m 'Auto merge script $RELEASE_VERSION cut from $SOURCE_BRANCH'",        
         "cd $REPO_NAME; git push origin $RELEASE_BRANCH",
         "cd $REPO_NAME; git tag -a V$RELEASE_VERSION -m 'Release $RELEASE_VERSION'",
         "cd $REPO_NAME; git push origin V$RELEASE_VERSION",
