@@ -23,8 +23,8 @@ jobs:
     steps:
       - run: mkdir -p params
       - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> << pipeline.parameters.params_file >>
-      - run: echo "BRANCH_TYPE=development" >> params/parameters.list
-      - run: echo "PACKAGE_VERSION=1.0.1" >> params/parameters.list
+      - run: echo "BRANCH_TYPE=development" >> << pipeline.parameters.params_file >>
+      - run: echo "PACKAGE_VERSION=1.0.1" >> << pipeline.parameters.params_file >>
       - persist_to_workspace:
           root: .
           paths:
@@ -50,7 +50,7 @@ jobs:
 
               echo "export ${VAR_KEY}=${VAR_VAL}" >> $BASH_ENV
               echo "${VAR_KEY}=${VAR_VAL}"
-            done < /tmp/workspace/params/parameters.list
+            done < /tmp/workspace/<< pipeline.parameters.params_file >>
 
       - checkout
 
