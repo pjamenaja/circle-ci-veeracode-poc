@@ -110,6 +110,11 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
       
+      - persist_to_workspace:
+          root: target/${PACKAGE_NAME}.jar
+          paths:
+            - package
+
       - store_artifacts:
           # Env variables interpolation are not working here!!!
           path: target/${PACKAGE_NAME}.jar
@@ -124,3 +129,5 @@ jobs:
           at: << pipeline.parameters.workspace_path >>
 
       - populate_params
+
+      - run: find << pipeline.parameters.workspace_path >> -name *       
