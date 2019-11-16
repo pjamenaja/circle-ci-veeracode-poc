@@ -1,17 +1,47 @@
 version: 2
+
+workflows:
+  version: 2
+
+  btd:
+    jobs:
+      - initialize
+      - build:
+          requires:
+            - initialize
+
 jobs:
+  initialize:
+    working_directory: ~/java-demo-lib
+    docker:
+      - image: circleci/openjdk:8-jdk-stretch
+    steps:
+      - run: mkdir -p params
+      - run: echo "PACKAGE_VERSION=branch-1.0.1-SNAPSHOT" > params/parameters.list    
+      - persist_to_workspace:
+          root: .
+          paths:
+            - params
+
   build:
     working_directory: ~/java-demo-lib
     docker:
       - image: circleci/openjdk:8-jdk-stretch
 
     steps:
-      - checkout
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
 
       - run: 
           name: "Setup custom environment variables"
           command: |
-            echo 'export PACKAGE_VERSION="branch-1.0.1-SNAPSHOT"' >> $BASH_ENV # Redirect MY_ENV_VAR into $BASH_ENV
+            while read p; do
+              echo 'export PACKAGE_VERSION="branch-1.0.1-SNAPSHOT"' >> $BASH_ENV
+              echo "$p"
+            done </tmp/workspace/params/parameters.list
+
+      - checkout
 
       - restore_cache:
           key: java-demo-lib-{{ checksum "pom.xml" }}
