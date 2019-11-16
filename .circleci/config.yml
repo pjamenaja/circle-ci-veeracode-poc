@@ -56,13 +56,23 @@ jobs:
       - image: circleci/python:3.8
     steps:
       - run: mkdir -p params
-      - run: |          
-          BT=$(echo ${CIRCLE_BRANCH} | cut -d '/' -f 1)
-          NAME=${BT}-1.0.1-SNAPSHOT
 
+      #Branches should be : devlopment, release/1.0.1, master, feature/JIRA00001
+      - run: |      
+          BT=$(echo ${CIRCLE_BRANCH} | cut -d '/' -f 1)
+          DESC=$(echo ${CIRCLE_BRANCH} | cut -d '/' -f 2)
+          VERSION='1.0.1'
+
+          if [ "${BT}" == 'release' ] || [ "${BT}" == 'master' ] || [ -z "$DESC" ]
+          then
+            NAME=${BT}-${VERSION}
+          else
+            NAME=${BT}-${DESC}-${VERSION}
+          fi
+          
           echo "PACKAGE_NAME=${NAME}" >> << pipeline.parameters.params_file >>
           echo "BRANCH_TYPE=${BT}" >> << pipeline.parameters.params_file >>
-          echo "PACKAGE_VERSION=1.0.1" >> << pipeline.parameters.params_file >>
+          echo "PACKAGE_VERSION=${VERSION}" >> << pipeline.parameters.params_file >>
       - persist_to_workspace:
           root: .
           paths:
