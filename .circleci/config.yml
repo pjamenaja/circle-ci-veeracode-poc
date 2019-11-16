@@ -17,7 +17,8 @@ jobs:
       - image: circleci/openjdk:8-jdk-stretch
     steps:
       - run: mkdir -p params
-      - run: echo "PACKAGE_VERSION=branch-1.0.1-SNAPSHOT" > params/parameters.list    
+      - run: echo "PACKAGE_VERSION=branch-1.0.1-SNAPSHOT" >> params/parameters.list   
+      - run: echo "BRANCH_TYPE=development" >> params/parameters.list    
       - persist_to_workspace:
           root: .
           paths:
