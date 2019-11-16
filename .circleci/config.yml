@@ -111,9 +111,9 @@ jobs:
           path: target/surefire-reports
       
       - persist_to_workspace:
-          root: target/
+          root: .
           paths:
-            - package
+            - target
 
       - store_artifacts:
           # Env variables interpolation are not working here!!!
