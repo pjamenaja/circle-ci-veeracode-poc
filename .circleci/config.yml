@@ -23,7 +23,7 @@ jobs:
             - ~/.m2
           key: java-demo-lib-{{ checksum "pom.xml" }}
       
-      - run: mvn -Drevision=${PACKAGE_VERSION} package
+      - run: mvn -Drevision=${PACKAGE_VERSION} package 
       
       - store_test_results:
           path: target/surefire-reports
