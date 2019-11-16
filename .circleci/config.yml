@@ -40,9 +40,10 @@ jobs:
           name: "Setup custom environment variables"
           command: |
             while read p; do
+              VAR_NAME = `echo "$p" | cut -d "=" -f 1`
               echo 'export PACKAGE_NAME="branch-1.0.1-SNAPSHOT"' >> $BASH_ENV
-              echo "$p"
-            done </tmp/workspace/params/parameters.list
+              echo "$VAR_NAME"
+            done < /tmp/workspace/params/parameters.list
 
       - checkout
 
