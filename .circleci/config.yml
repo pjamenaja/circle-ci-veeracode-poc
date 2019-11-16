@@ -6,7 +6,6 @@ parameters:
     type: string
     default: "1.0.1-SNAPSHOT"
 
-parameters:
   params_file:
     type: string
     default: "params/parameters.list"
