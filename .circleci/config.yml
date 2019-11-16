@@ -17,8 +17,9 @@ jobs:
       - image: circleci/openjdk:8-jdk-stretch
     steps:
       - run: mkdir -p params
-      - run: echo "PACKAGE_VERSION=branch-1.0.1-SNAPSHOT" >> params/parameters.list   
-      - run: echo "BRANCH_TYPE=development" >> params/parameters.list    
+      - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> params/parameters.list   
+      - run: echo "BRANCH_TYPE=development" >> params/parameters.list
+      - run: echo "PACKAGE_VERSION=1.0.1" >> params/parameters.list
       - persist_to_workspace:
           root: .
           paths:
@@ -38,7 +39,7 @@ jobs:
           name: "Setup custom environment variables"
           command: |
             while read p; do
-              echo 'export PACKAGE_VERSION="branch-1.0.1-SNAPSHOT"' >> $BASH_ENV
+              echo 'export PACKAGE_NAME="branch-1.0.1-SNAPSHOT"' >> $BASH_ENV
               echo "$p"
             done </tmp/workspace/params/parameters.list
 
