@@ -56,10 +56,12 @@ jobs:
       - image: circleci/python:3.8
     steps:
       - run: mkdir -p params
-      - run: |
-          NAME=${CIRCLE_BRANCH}-1.0.1-SNAPSHOT
+      - run: |          
+          BT=$(echo ${CIRCLE_BRANCH} | cut -d '/' -f 1)
+          NAME=${BT}-1.0.1-SNAPSHOT
+
           echo "PACKAGE_NAME=${NAME}" >> << pipeline.parameters.params_file >>
-          echo "BRANCH_TYPE=development" >> << pipeline.parameters.params_file >>
+          echo "BRANCH_TYPE=${BT}" >> << pipeline.parameters.params_file >>
           echo "PACKAGE_VERSION=1.0.1" >> << pipeline.parameters.params_file >>
       - persist_to_workspace:
           root: .
