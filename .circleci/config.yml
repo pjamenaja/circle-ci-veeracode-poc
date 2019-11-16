@@ -19,7 +19,7 @@ jobs:
   initialize:
     working_directory: ~/java-demo-lib
     docker:
-      - image: ubuntu:14.04
+      - image: circleci/ubuntu
     steps:
       - run: mkdir -p params
       - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> << pipeline.parameters.params_file >>
