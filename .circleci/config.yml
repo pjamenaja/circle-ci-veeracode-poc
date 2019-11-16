@@ -19,7 +19,7 @@ jobs:
   initialize:
     working_directory: ~/java-demo-lib
     docker:
-      - image: circleci/ubuntu
+      - image: circleci/openjdk:8-jdk-stretch
     steps:
       - run: mkdir -p params
       - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> << pipeline.parameters.params_file >>
