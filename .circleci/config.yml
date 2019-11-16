@@ -27,6 +27,7 @@ jobs:
 
   build:
     working_directory: ~/java-demo-lib
+    shell: /bin/sh -leo pipefail
     docker:
       - image: circleci/openjdk:8-jdk-stretch
 
