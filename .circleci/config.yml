@@ -111,7 +111,7 @@ jobs:
           path: target/surefire-reports
       
       - persist_to_workspace:
-          root: target/*.jar
+          root: target/
           paths:
             - package
 
