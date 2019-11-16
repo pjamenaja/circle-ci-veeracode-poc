@@ -8,6 +8,11 @@ jobs:
     steps:
       - checkout
 
+      - run: 
+          name: "Setup custom environment variables"
+          command: |
+            echo 'export PACKAGE_VERSION="branch-1.0.1-SNAPSHOT"' >> $BASH_ENV # Redirect MY_ENV_VAR into $BASH_ENV
+
       - restore_cache:
           key: java-demo-lib-{{ checksum "pom.xml" }}
       
@@ -18,7 +23,7 @@ jobs:
             - ~/.m2
           key: java-demo-lib-{{ checksum "pom.xml" }}
       
-      - run: mvn -Drevision=branch-1.0.1-SNAPSHOT package
+      - run: mvn -Drevision=${PACKAGE_VERSION} package
       
       - store_test_results:
           path: target/surefire-reports
