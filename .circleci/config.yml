@@ -9,6 +9,24 @@ parameters:
     type: string
     default: "/tmp/workspace"
 
+#Reusable pieces of code here
+commands:
+  populate_params:
+    description: "Setup custom environment variables"
+    steps:
+      - run: 
+          name: "Setup custom environment variables"
+          command: |
+            while read p; do
+              VAR_KEY=$(echo "$p" | cut -d "=" -f 1)
+              VAR_VAL=$(echo "$p" | cut -d "=" -f 2)
+
+              echo "export ${VAR_KEY}=${VAR_VAL}" >> $BASH_ENV
+              echo "${VAR_KEY}=${VAR_VAL}"
+            done < << pipeline.parameters.workspace_path >>/<< pipeline.parameters.params_file >>
+
+
+# Workflow and jobs start here
 workflows:
   version: 2
 
@@ -45,16 +63,7 @@ jobs:
           # Must be absolute path or relative path from working_directory
           at: << pipeline.parameters.workspace_path >>
 
-      - run: 
-          name: "Setup custom environment variables"
-          command: |
-            while read p; do
-              VAR_KEY=$(echo "$p" | cut -d "=" -f 1)
-              VAR_VAL=$(echo "$p" | cut -d "=" -f 2)
-
-              echo "export ${VAR_KEY}=${VAR_VAL}" >> $BASH_ENV
-              echo "${VAR_KEY}=${VAR_VAL}"
-            done < << pipeline.parameters.workspace_path >>/<< pipeline.parameters.params_file >>
+      - populate_params
 
       - checkout
 
