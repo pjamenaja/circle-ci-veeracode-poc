@@ -45,12 +45,15 @@ workflows:
       - build:
           requires:
             - initialize
+      - veracode_upload:
+          requires:
+            - build
 
 jobs:
   initialize:
     working_directory: ~/<< pipeline.parameters.work_dir >>
     docker:
-      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/python:3.8
     steps:
       - run: mkdir -p params
       - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> << pipeline.parameters.params_file >>
@@ -63,13 +66,11 @@ jobs:
 
   build:
     working_directory: ~/<< pipeline.parameters.work_dir >>
-    shell: /bin/bash -eo pipefail
     docker:
       - image: circleci/openjdk:8-jdk-stretch
 
     steps:
       - attach_workspace:
-          # Must be absolute path or relative path from working_directory
           at: << pipeline.parameters.workspace_path >>
 
       - populate_params
@@ -94,3 +95,14 @@ jobs:
       - store_artifacts:
           # Env variables interpolation are not working here!!!
           path: target/${PACKAGE_NAME}.jar
+
+  veracode_upload:
+    working_directory: ~/<< pipeline.parameters.work_dir >>
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - attach_workspace:
+          at: << pipeline.parameters.workspace_path >>
+
+      - populate_params
