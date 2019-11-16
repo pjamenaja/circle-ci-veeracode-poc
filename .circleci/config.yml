@@ -1,5 +1,6 @@
 version: 2.1
 
+#Reusable pieces of value here
 parameters:
   params_file:
     type: string
@@ -8,6 +9,14 @@ parameters:
   workspace_path:
     type: string
     default: "/tmp/workspace"
+
+  work_dir:
+    type: string
+    default: "java-demo-lib"
+
+  work_key:
+    type: string
+    default: "java-demo-lib"    
 
 #Reusable pieces of code here
 commands:
@@ -39,7 +48,7 @@ workflows:
 
 jobs:
   initialize:
-    working_directory: ~/java-demo-lib
+    working_directory: ~/<< pipeline.parameters.work_dir >>
     docker:
       - image: circleci/openjdk:8-jdk-stretch
     steps:
@@ -53,7 +62,7 @@ jobs:
             - params
 
   build:
-    working_directory: ~/java-demo-lib
+    working_directory: ~/<< pipeline.parameters.work_dir >>
     shell: /bin/bash -eo pipefail
     docker:
       - image: circleci/openjdk:8-jdk-stretch
@@ -68,14 +77,14 @@ jobs:
       - checkout
 
       - restore_cache:
-          key: java-demo-lib-{{ checksum "pom.xml" }}
+          key: << pipeline.parameters.work_key >>-{{ checksum "pom.xml" }}
       
       - run: mvn dependency:go-offline
       
       - save_cache:
           paths:
             - ~/.m2
-          key: java-demo-lib-{{ checksum "pom.xml" }}
+          key: << pipeline.parameters.work_key >>-{{ checksum "pom.xml" }}
       
       - run: mvn -Drevision=${PACKAGE_NAME} package 
       
