@@ -4,7 +4,7 @@ version: 2.1
 parameters:
   package_version:
     type: string
-    default: "1.0.5"
+    default: "1.0.6"
 
   params_file:
     type: string
@@ -35,7 +35,7 @@ commands:
               VAR_VAL=$(echo "$p" | cut -d "=" -f 2)
 
               echo "export ${VAR_KEY}=${VAR_VAL}" >> $BASH_ENV
-              echo "Populating with : " "${VAR_KEY}=${VAR_VAL}"
+              echo "Populating with : ${VAR_KEY}=${VAR_VAL}"
             done < << pipeline.parameters.workspace_path >>/<< pipeline.parameters.params_file >>
 
 
