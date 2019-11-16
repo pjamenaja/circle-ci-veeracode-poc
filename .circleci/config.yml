@@ -1,5 +1,10 @@
 version: 2.1
 
+parameters:
+  params_file:
+    type: string
+    default: "params/parameters.list"
+
 workflows:
   version: 2
 
@@ -14,10 +19,10 @@ jobs:
   initialize:
     working_directory: ~/java-demo-lib
     docker:
-      - image: circleci/openjdk:8-jdk-stretch
+      - image: ubuntu:14.04
     steps:
       - run: mkdir -p params
-      - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> params/parameters.list   
+      - run: echo "PACKAGE_NAME=branch-1.0.1-SNAPSHOT" >> << pipeline.parameters.params_file >>
       - run: echo "BRANCH_TYPE=development" >> params/parameters.list
       - run: echo "PACKAGE_VERSION=1.0.1" >> params/parameters.list
       - persist_to_workspace:
