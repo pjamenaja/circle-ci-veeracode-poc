@@ -5,6 +5,10 @@ parameters:
     type: string
     default: "params/parameters.list"
 
+  workspace_path:
+    type: string
+    default: "/tmp/workspace"
+
 workflows:
   version: 2
 
@@ -39,7 +43,7 @@ jobs:
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
-          at: /tmp/workspace
+          at: << pipeline.parameters.workspace_path >>
 
       - run: 
           name: "Setup custom environment variables"
@@ -50,7 +54,7 @@ jobs:
 
               echo "export ${VAR_KEY}=${VAR_VAL}" >> $BASH_ENV
               echo "${VAR_KEY}=${VAR_VAL}"
-            done < /tmp/workspace/<< pipeline.parameters.params_file >>
+            done < << pipeline.parameters.workspace_path >>/<< pipeline.parameters.params_file >>
 
       - checkout
 
