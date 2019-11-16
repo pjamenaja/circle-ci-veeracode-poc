@@ -63,13 +63,13 @@ jobs:
           DESC=$(echo ${CIRCLE_BRANCH} | cut -d '/' -f 2)
           VERSION='1.0.1'
 
-          if [ "${BT}" == 'release' ] || [ "${BT}" == 'master' ] || [ -z "$DESC" ]
+          if [ "${BT}" == 'release' ] || [ "${BT}" == 'master' ] || [ "${BT}" == 'development' ]
           then
             NAME=${BT}-${VERSION}
           else
             NAME=${BT}-${DESC}-${VERSION}
           fi
-          
+
           echo "PACKAGE_NAME=${NAME}" >> << pipeline.parameters.params_file >>
           echo "BRANCH_TYPE=${BT}" >> << pipeline.parameters.params_file >>
           echo "PACKAGE_VERSION=${VERSION}" >> << pipeline.parameters.params_file >>
